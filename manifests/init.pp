@@ -43,20 +43,19 @@ class postfix (
   $service_enable = $postfix::params::service_enable,
   $service_name   = $postfix::params::service_name,
   $service_flags  = $postfix::params::service_flags,
-  $postmap        = $postfix::params::postmap,
-  $newaliases     = $postfix::params::newaliases,
   $maps           = $postfix::params::maps,
+  $dmesgscript    = $postfix::params::dmesgscript,
 ) inherits postfix::params {
 
   class { 'postfix::install':
     package_ensure => $package_ensure,
-    package_name => $package_name,
+    package_name   => $package_name,
     package_flavor => $package_flavor,
   }
 
   class { 'postfix::config':
-    newaliases => $newaliases,
-    postmap    => $postmap,
+    maps        => $maps,
+    dmesgscript => $dmesgscript,
   }
 
   class { 'postfix::enable':
@@ -69,4 +68,9 @@ class postfix (
     service_enable => $service_enable,
     service_flags  => $service_flags,
   }
+
+  Class['postfix::install'] ->
+  Class['postfix::enable'] ->
+  Class['postfix::config'] ~>
+  Class['postfix::service']
 }

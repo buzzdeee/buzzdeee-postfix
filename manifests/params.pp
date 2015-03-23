@@ -8,5 +8,6 @@ class postfix::params {
   $service_name = 'postfix'
   $postmap = '/usr/local/sbin/postmap'
   $newaliases = '/usr/local/sbin/newaliases'
+  $dmesgscript = 'process_dmesgs.sh'
   $maps = []
 }
