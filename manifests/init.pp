@@ -29,22 +29,32 @@
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Author Name <sebastia@l00-bugdead-prods.de>
 #
 # === Copyright
 #
 # Copyright 2014 Your name here, unless otherwise noted.
 #
 class postfix (
-  $package_ensure = $postfix::params::package_ensure,
-  $package_name   = $postfix::params::package_name,
-  $package_flavor = $postfix::params::package_flavor,
-  $service_ensure = $postfix::params::service_ensure,
-  $service_enable = $postfix::params::service_enable,
-  $service_name   = $postfix::params::service_name,
-  $service_flags  = $postfix::params::service_flags,
-  $maps           = $postfix::params::maps,
-  $dmesgscript    = $postfix::params::dmesgscript,
+  $package_ensure    = $postfix::params::package_ensure,
+  $package_name      = $postfix::params::package_name,
+  $package_flavor    = $postfix::params::package_flavor,
+  $activate_postfix  = $postfix::params::activate_postfix,
+  $service_ensure    = $postfix::params::service_ensure,
+  $service_enable    = $postfix::params::service_enable,
+  $service_name      = $postfix::params::service_name,
+  $service_flags     = $postfix::params::service_flags,
+  $postmap           = $postfix::params::postmap,
+  $aliases           = $postfix::params::aliases,
+  $alias_map         = $postfix::params::alias_map,
+  $newaliases        = $postfix::params::newaliases,
+  $maps              = $postfix::params::maps,
+  $main_cf           = $postfix::params::main_cf,
+  $sysconfig_mail    = $postfix::params::sysconfig_mail,
+  $sysconfig_postfix = $postfix::params::sysconfig_postfix,
+  $mail_config_type  = $postfix::params::mail_config_type,
+  $myhostname        = $postfix::params::myhostname,
+  $relayhost         = $postfix::params::relayhost,
 ) inherits postfix::params {
 
   class { 'postfix::install':
@@ -54,12 +64,29 @@ class postfix (
   }
 
   class { 'postfix::config':
-    maps        => $maps,
-    dmesgscript => $dmesgscript,
+    alias_map         => $alias_map,
+    newaliases        => $newaliases,
+    postmap           => $postmap,
+    maps              => $maps,
+    main_cf           => $main_cf,
+    sysconfig_mail    => $sysconfig_mail,
+    sysconfig_postfix => $sysconfig_postfix,
+    mail_config_type  => $mail_config_type,
+    myhostname        => $myhostname,
+    relayhost         => $relayhost,
   }
 
-  class { 'postfix::enable':
-    service_enable => $service_enable,
+  if $activate_postfix {
+    class { 'postfix::enable':
+      service_enable => $service_enable,
+      require        => Class['postfix::install'],
+    }
+  }
+
+  class { 'postfix::aliases':
+    aliases    => $aliases,
+    newaliases => $newaliases,
+    alias_map  => $alias_map,
   }
 
   class { 'postfix::service':
@@ -70,7 +97,6 @@ class postfix (
   }
 
   Class['postfix::install'] ->
-  Class['postfix::enable'] ->
   Class['postfix::config'] ~>
   Class['postfix::service']
 }

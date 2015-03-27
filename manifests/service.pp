@@ -1,3 +1,6 @@
+# private class, do not use directly
+# This class takes care about managing
+# the postfix service
 class postfix::service (
   $service_name,
   $service_ensure,

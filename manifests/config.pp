@@ -1,44 +1,71 @@
+# This class takes care to manage entries
+# in the postfix configuration files, currently
+# main.cf. On Suse, files in /etc/sysconfig
+# are managed too
 class postfix::config (
-  $dmesgscript,
+  $alias_map,
+  $newaliases,
+  $postmap,
   $maps,
+  $main_cf,
+  $sysconfig_mail,
+  $sysconfig_postfix,
+  $mail_config_type,
+  $myhostname,
+  $relayhost,
 ) {
-  file { '/etc/postfix/main.cf':
-    ensure  => 'present',
-    owner   => 'root',
-    group   => '0',
-    mode    => '0644',
-    content => hiera('main.cf.erb')
-  }
-  file { '/etc/postfix/master.cf':
-    ensure  => 'present',
-    owner   => 'root',
-    group   => '0',
-    mode    => '0644',
-    content => hiera('master.cf.erb')
-  }
-
-  $aliases = hiera_hash('mailaliases')
-  $aliasdefaults = hiera_hash('mailaliases::defaults')
-  create_resources(mailalias, $aliases, $aliasdefaults)
-
-  exec { "newaliases ${aliasdefaults['target']}":
-    command     => "/usr/local/sbin/newaliases",
-    refreshonly => true,
-  }
-
-  each ($maps) |$map| {
-    file { "/etc/postfix/${map}":
-      ensure  => 'present',
-      owner   => 'root',
-      group   => '0',
-      mode    => '0644',
-      content => hiera($map),
-      notify  => Exec["postmap ${map}"],
-    }
-    exec { "postmap ${map}":
-      command     => "/usr/local/sbin/postmap /etc/postfix/${map}",
-      refreshonly => true,
+  if $sysconfig_mail {
+    ini_setting { 'configtype_sysconfig_mail':
+      ensure            => present,
+      path              => $sysconfig_mail,
+      section           => '',
+      key_val_separator => '=',
+      setting           => 'CONFIG_TYPE',
+      value             => "\"${mail_config_type}\"",
     }
   }
 
+  if $sysconfig_postfix {
+    ini_setting { 'relayhost_sysconfig_postfix':
+      ensure            => present,
+      path              => $sysconfig_postfix,
+      section           => '',
+      key_val_separator => '=',
+      setting           => 'POSTFIX_RELAYHOST',
+      value             => "\"${relayhost}\"",
+    }
+  }
+
+  ini_setting { 'relayhost_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => '=',
+    setting           => 'relayhost',
+    value             => $relayhost,
+  }
+  ini_setting { 'myhostname_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'myhostname',
+    value             => $myhostname,
+  }
+  ini_setting { 'myhostname_alias_maps':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'alias_maps',
+    value             => "hash:${alias_map}",
+  }
+  ini_setting { 'myhostname_newaliases_path':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'newaliases_path',
+    value             => $newaliases,
+  }
 }

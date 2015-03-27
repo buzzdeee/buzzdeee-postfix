@@ -1,3 +1,6 @@
+# private class, do not use directly
+# This class takes care about
+# package installation
 class postfix::install (
   $package_name,
   $package_ensure,
