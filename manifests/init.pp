@@ -82,6 +82,8 @@ class postfix (
       require        => Class['postfix::install'],
       before         => Class['postfix::aliases'],
     }
+    Class['postfix::enable'] ->
+    Mailalias <| target == $alias_map |>
   }
 
   class { 'postfix::aliases':
