@@ -80,6 +80,7 @@ class postfix (
     class { 'postfix::enable':
       service_enable => $service_enable,
       require        => Class['postfix::install'],
+      before         => Class['postfix::aliases'],
     }
   }
 
