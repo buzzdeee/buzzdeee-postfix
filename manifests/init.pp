@@ -89,7 +89,6 @@ class postfix (
   class { 'postfix::aliases':
     aliases    => $aliases,
     newaliases => $newaliases,
-    alias_map  => $alias_map,
   }
 
   class { 'postfix::service':
