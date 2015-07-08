@@ -36,13 +36,10 @@ class postfix::config (
     }
   }
 
-  ini_setting { 'relayhost_main_cf':
-    ensure            => present,
-    path              => $main_cf,
-    section           => '',
-    key_val_separator => ' = ',
-    setting           => 'relayhost',
-    value             => $relayhost,
+  file_line { 'relayhost_main_cf':
+    path  => $main_cf,
+    line  => "relayhost = $relayhost",
+    match => '^relayhost =\s',
   }
   ini_setting { 'myhostname_main_cf':
     ensure            => present,
