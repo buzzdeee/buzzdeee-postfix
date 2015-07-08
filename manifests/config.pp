@@ -40,7 +40,7 @@ class postfix::config (
     ensure            => present,
     path              => $main_cf,
     section           => '',
-    key_val_separator => '=',
+    key_val_separator => ' = ',
     setting           => 'relayhost',
     value             => $relayhost,
   }
