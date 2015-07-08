@@ -7,7 +7,6 @@ class postfix::params {
       $activate_postfix = true
       $postmap = '/usr/local/sbin/postmap'
       $newaliases = '/usr/local/sbin/newaliases'
-      $sysconfig_mail = '/etc/sysconfig/mail'
       $sysconfig_mail = undef
       $sysconfig_postfix = undef
       $mail_config_type = undef

@@ -80,13 +80,15 @@ class postfix (
     class { 'postfix::enable':
       service_enable => $service_enable,
       require        => Class['postfix::install'],
+      before         => Class['postfix::aliases'],
     }
+    Class['postfix::enable'] ->
+    Mailalias <| target == $alias_map |>
   }
 
   class { 'postfix::aliases':
     aliases    => $aliases,
     newaliases => $newaliases,
-    alias_map  => $alias_map,
   }
 
   class { 'postfix::service':
