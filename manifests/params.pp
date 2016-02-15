@@ -30,6 +30,22 @@ class postfix::params {
       $sysconfig_postfix = '/etc/sysconfig/postfix'
       $mail_config_type = 'standard'
     }
+    'Debian': {
+      case $::operatingsystem {
+        'Ubuntu': {
+          $sysconfig_mail = undef
+          $alias_map = '/etc/aliases'
+          $activate_postfix = false
+          $postmap = '/usr/sbin/postmap'
+          $newaliases = '/usr/bin/newaliases'
+          $sysconfig_postfix = undef
+          $mail_config_type = undef
+        }
+        default: {
+          fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${::osfamily}/${::operatingsystem}")
+        }
+      }
+    }
     default: {
       fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${::osfamily}")
     }
