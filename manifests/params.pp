@@ -42,7 +42,7 @@ class postfix::params {
   $mydomain = undef
   $mydestination = undef
   $myorigin = $::fqdn
-  $maps = []
+  $senders_map_hash = {}
   $main_cf = '/etc/postfix/main.cf'
   $package_ensure = 'installed'
   $package_name = 'postfix'
@@ -51,4 +51,13 @@ class postfix::params {
   $service_enable = true
   $service_flags = undef
   $service_name = 'postfix'
+  $smtpd_sasl_auth_enable = 'no'
+  $smtpd_sasl_path = 'smtpd'
+  $smtpd_sasl_local_domain = '$mydomain'
+  $smtpd_sasl_security_options = 'noanonymous'
+  $smtp_sasl_auth_enable = 'no'
+  $smtp_sasl_password_maps = '/etc/postfix/sasl_passwd'
+  $smtp_sasl_security_options = 'noplaintext noanonymous'
+  $smtp_sasl_tls_security_options = 'noanonymous'
+  $sender_dependent_relayhost_maps = '/etc/postfix/sender_relay'
 }

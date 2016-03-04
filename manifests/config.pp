@@ -16,6 +16,15 @@ class postfix::config (
   $myorigin,
   $mydestination,
   $mydomain,
+  $smtpd_sasl_auth_enable,
+  $smtpd_sasl_path,
+  $smtpd_sasl_local_domain,
+  $smtpd_sasl_security_options,
+  $smtp_sasl_auth_enable,
+  $smtp_sasl_password_maps,
+  $smtp_sasl_security_options,
+  $smtp_sasl_tls_security_options,
+  $sender_dependent_relayhost_maps,
 ) {
   if $sysconfig_mail {
     ini_setting { 'configtype_sysconfig_mail':
@@ -51,6 +60,78 @@ class postfix::config (
     key_val_separator => ' = ',
     setting           => 'myorigin',
     value             => $myorigin,
+  }
+  ini_setting { 'sender_dependent_relayhost_maps_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'sender_dependent_relayhost_maps',
+    value             => "hash:${sender_dependent_relayhost_maps}",
+  }
+  ini_setting { 'smtp_sasl_tls_security_options_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtp_sasl_tls_security_options',
+    value             => $smtp_sasl_tls_security_options,
+  }
+  ini_setting { 'smtp_sasl_security_options_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtp_sasl_security_options',
+    value             => $smtp_sasl_security_options,
+  }
+  ini_setting { 'smtp_sasl_password_maps_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtp_sasl_password_maps',
+    value             => "hash:${smtp_sasl_password_maps}",
+  }
+  ini_setting { 'smtp_sasl_auth_enable_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtp_sasl_auth_enable',
+    value             => $smtp_sasl_auth_enable,
+  }
+  ini_setting { 'smtpd_sasl_security_options_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_sasl_security_options',
+    value             => $smtpd_sasl_security_options,
+  }
+  ini_setting { 'smtpd_sasl_local_domain_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_sasl_local_domain',
+    value             => $smtpd_sasl_local_domain,
+  }
+  ini_setting { 'smtpd_sasl_path_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_sasl_path',
+    value             => $smtpd_sasl_path,
+  }
+  ini_setting { 'smtpd_sasl_auth_enable_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_sasl_auth_enable',
+    value             => $smtpd_sasl_auth_enable,
   }
   ini_setting { 'mydestination_main_cf':
     ensure            => present,

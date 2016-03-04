@@ -1,0 +1,3 @@
+<%- @senders_map_hash.each do |sender, value| -%>
+<%= sender %>		<%= value['remote_user'] %>:<%= value['remote_password'] %>
+<%- end -%>

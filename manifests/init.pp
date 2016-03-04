@@ -48,7 +48,7 @@ class postfix (
   $aliases           = $postfix::params::aliases,
   $alias_map         = $postfix::params::alias_map,
   $newaliases        = $postfix::params::newaliases,
-  $maps              = $postfix::params::maps,
+  $senders_map_hash  = $postfix::params::senders_map_hash,
   $main_cf           = $postfix::params::main_cf,
   $sysconfig_mail    = $postfix::params::sysconfig_mail,
   $sysconfig_postfix = $postfix::params::sysconfig_postfix,
@@ -58,6 +58,16 @@ class postfix (
   $mydomain          = $postfix::params::mydomain,
   $myorigin          = $postfix::params::myorigin,
   $mydestination     = $postfix::params::mydestination,
+  $smtpd_sasl_auth_enable = $postfix::params::smtpd_sasl_auth_enable,
+  $smtpd_sasl_path = $postfix::params::smtpd_sasl_path,
+  $smtpd_sasl_local_domain = $postfix::params::smtpd_sasl_local_domain,
+  $smtpd_sasl_security_options = $postfix::params::smtpd_sasl_security_options,
+  $smtp_sasl_auth_enable = $postfix::params::smtp_sasl_auth_enable,
+  $smtp_sasl_password_maps = $postfix::params::smtp_sasl_password_maps,
+  $smtp_sasl_security_options = $postfix::params::smtp_sasl_security_options,
+  $smtp_sasl_tls_security_options = $postfix::params::smtp_sasl_tls_security_options,
+  $sender_dependent_relayhost_maps = $postfix::params::sender_dependent_relayhost_maps,
+
 ) inherits postfix::params {
 
   class { 'postfix::install':
@@ -67,19 +77,28 @@ class postfix (
   }
 
   class { 'postfix::config':
-    alias_map         => $alias_map,
-    newaliases        => $newaliases,
-    postmap           => $postmap,
-    maps              => $maps,
-    main_cf           => $main_cf,
-    sysconfig_mail    => $sysconfig_mail,
-    sysconfig_postfix => $sysconfig_postfix,
-    mail_config_type  => $mail_config_type,
-    myhostname        => $myhostname,
-    relayhost         => $relayhost,
-    mydomain          => $mydomain,
-    myorigin          => $myorigin,
-    mydestination     => $mydestination,
+    alias_map                       => $alias_map,
+    newaliases                      => $newaliases,
+    postmap                         => $postmap,
+    maps                            => $maps,
+    main_cf                         => $main_cf,
+    sysconfig_mail                  => $sysconfig_mail,
+    sysconfig_postfix               => $sysconfig_postfix,
+    mail_config_type                => $mail_config_type,
+    myhostname                      => $myhostname,
+    relayhost                       => $relayhost,
+    mydomain                        => $mydomain,
+    myorigin                        => $myorigin,
+    mydestination                   => $mydestination,
+    smtpd_sasl_auth_enable          => $smtpd_sasl_auth_enable,
+    smtpd_sasl_path                 => $smtpd_sasl_path,
+    smtpd_sasl_local_domain         => $smtpd_sasl_local_domain,
+    smtpd_sasl_security_options     => $smtpd_sasl_security_options,
+    smtp_sasl_auth_enable           => $smtp_sasl_auth_enable,
+    smtp_sasl_password_maps         => $smtp_sasl_password_maps,
+    smtp_sasl_security_options      => $smtp_sasl_security_options,
+    smtp_sasl_tls_security_options  => $smtp_sasl_tls_security_options,
+    sender_dependent_relayhost_maps => $sender_dependent_relayhost_maps,
   }
 
   if $activate_postfix {
@@ -97,6 +116,13 @@ class postfix (
     newaliases => $newaliases,
   }
 
+  class { 'postfix::sender_relays':
+    senders_map_hash                => $senders_map_hash,
+    postmap                         => $postmap,
+    smtp_sasl_password_maps         => $smtp_sasl_password_maps,
+    sender_dependent_relayhost_maps => $sender_dependent_relayhost_maps,
+  }
+
   class { 'postfix::service':
     service_name   => $service_name,
     service_ensure => $service_ensure,
@@ -106,5 +132,7 @@ class postfix (
 
   Class['postfix::install'] ->
   Class['postfix::config'] ~>
+  Class['postfix::aliases'] ~>
+  Class['postfix::sender_relays'] ~>
   Class['postfix::service']
 }
