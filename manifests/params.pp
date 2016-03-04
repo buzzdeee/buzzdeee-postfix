@@ -76,4 +76,5 @@ class postfix::params {
   $smtp_use_tls = 'no'
   $smtpd_tls_received_header = 'no'
   $smtp_tls_note_starttls_offer = 'no'
+  $inet_protocols = 'ipv4'
 }
