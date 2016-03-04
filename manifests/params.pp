@@ -44,6 +44,7 @@ class postfix::params {
   $myorigin = $::fqdn
   $senders_map_hash = {}
   $main_cf = '/etc/postfix/main.cf'
+  $master_cf = '/etc/postfix/master.cf'
   $package_ensure = 'installed'
   $package_name = 'postfix'
   $package_flavor = undef
@@ -60,4 +61,11 @@ class postfix::params {
   $smtp_sasl_security_options = 'noplaintext noanonymous'
   $smtp_sasl_tls_security_options = 'noanonymous'
   $sender_dependent_relayhost_maps = '/etc/postfix/sender_relay'
+  $relay_to_amavis = false
+  $amavis_dst_host = 'localhost'
+  $amavis_dst_port = '10024'
+  $amavis_listen_port = '10025'
+  $amavis_listen_host = 'localhost'
+  $enable_submission = false
+  $submission_flags = 'smtpd_recipient_restrictions=permit_sasl_authenticated,reject_unauth_destination'
 }

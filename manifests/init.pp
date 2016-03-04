@@ -50,6 +50,7 @@ class postfix (
   $newaliases        = $postfix::params::newaliases,
   $senders_map_hash  = $postfix::params::senders_map_hash,
   $main_cf           = $postfix::params::main_cf,
+  $master_cf         = $postfix::params::master_cf,
   $sysconfig_mail    = $postfix::params::sysconfig_mail,
   $sysconfig_postfix = $postfix::params::sysconfig_postfix,
   $mail_config_type  = $postfix::params::mail_config_type,
@@ -67,6 +68,13 @@ class postfix (
   $smtp_sasl_security_options = $postfix::params::smtp_sasl_security_options,
   $smtp_sasl_tls_security_options = $postfix::params::smtp_sasl_tls_security_options,
   $sender_dependent_relayhost_maps = $postfix::params::sender_dependent_relayhost_maps,
+  $relay_to_amavis = $postfix::params::relay_to_amavis,
+  $amavis_dst_host = $postfix::params::amavis_dst_host,
+  $amavis_dst_port = $postfix::params::amavis_dst_port,
+  $amavis_listen_port = $postfix::params::amavis_listen_port,
+  $amavis_listen_host = $postfix::params::amavis_listen_host,
+  $enable_submission = $postfix::params::enable_submission,
+  $submission_flags = $postfix::params::submission_flags,
 
 ) inherits postfix::params {
 
@@ -82,6 +90,7 @@ class postfix (
     postmap                         => $postmap,
     maps                            => $maps,
     main_cf                         => $main_cf,
+    master_cf                       => $master_cf,
     sysconfig_mail                  => $sysconfig_mail,
     sysconfig_postfix               => $sysconfig_postfix,
     mail_config_type                => $mail_config_type,
@@ -99,6 +108,13 @@ class postfix (
     smtp_sasl_security_options      => $smtp_sasl_security_options,
     smtp_sasl_tls_security_options  => $smtp_sasl_tls_security_options,
     sender_dependent_relayhost_maps => $sender_dependent_relayhost_maps,
+    relay_to_amavis                 => $relay_to_amavis,
+    amavis_dst_host                 => $amavis_dst_host,
+    amavis_dst_port                 => $amavis_dst_port,
+    amavis_listen_port              => $amavis_listen_port,
+    amavis_listen_host              => $amavis_listen_host,
+    enable_submission               => $enable_submission,
+    submission_flags                => $submission_flags,
   }
 
   if $activate_postfix {

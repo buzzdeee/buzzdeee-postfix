@@ -8,6 +8,7 @@ class postfix::config (
   $postmap,
   $maps,
   $main_cf,
+  $master_cf,
   $sysconfig_mail,
   $sysconfig_postfix,
   $mail_config_type,
@@ -25,6 +26,13 @@ class postfix::config (
   $smtp_sasl_security_options,
   $smtp_sasl_tls_security_options,
   $sender_dependent_relayhost_maps,
+  $relay_to_amavis,
+  $amavis_dst_host,
+  $amavis_dst_port,
+  $amavis_listen_port,
+  $amavis_listen_host,
+  $enable_submission,
+  $submission_flags,
 ) {
   if $sysconfig_mail {
     ini_setting { 'configtype_sysconfig_mail':
@@ -46,6 +54,13 @@ class postfix::config (
       setting           => 'POSTFIX_RELAYHOST',
       value             => "\"${relayhost}\"",
     }
+  }
+
+  file { $master_cf:
+    owner => 'root',
+    group => '0',
+    mode  => '0644',
+    content => template('postfix/master.cf.erb')
   }
 
   file_line { 'relayhost_main_cf':
