@@ -33,6 +33,14 @@ class postfix::config (
   $amavis_listen_host,
   $enable_submission,
   $submission_flags,
+  $smtpd_tls_auth_only,
+  $smtpd_tls_capath,
+  $smtpd_tls_cert_file,
+  $smtpd_tls_key_file,
+  $smtpd_use_tls,
+  $smtp_use_tls,
+  $smtpd_tls_received_header,
+  $smtp_tls_note_starttls_offer,
 ) {
   if $sysconfig_mail {
     ini_setting { 'configtype_sysconfig_mail':
@@ -67,6 +75,70 @@ class postfix::config (
     path  => $main_cf,
     line  => "relayhost = $relayhost",
     match => '^relayhost =\s',
+  }
+  ini_setting { 'smtp_tls_note_starttls_offer_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtp_tls_note_starttls_offer',
+    value             => $smtp_tls_note_starttls_offer,
+  }
+  ini_setting { 'smtpd_tls_received_header_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_tls_received_header',
+    value             => $smtpd_tls_received_header,
+  }
+  ini_setting { 'smtp_use_tls_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtp_use_tls',
+    value             => $smtp_use_tls,
+  }
+  ini_setting { 'smtpd_use_tls_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_use_tls',
+    value             => $smtpd_use_tls,
+  }
+  ini_setting { 'smtpd_tls_key_file_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_tls_key_file',
+    value             => $smtpd_tls_key_file,
+  }
+  ini_setting { 'smtpd_tls_cert_file_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_tls_cert_file',
+    value             => $smtpd_tls_cert_file,
+  }
+  ini_setting { 'smtpd_tls_capath_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_tls_CApath',
+    value             => $smtpd_tls_capath,
+  }
+  ini_setting { 'smtpd_tls_auth_only_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_tls_auth_only',
+    value             => $smtpd_tls_auth_only,
   }
   ini_setting { 'myorigin_main_cf':
     ensure            => present,

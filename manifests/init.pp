@@ -75,6 +75,14 @@ class postfix (
   $amavis_listen_host = $postfix::params::amavis_listen_host,
   $enable_submission = $postfix::params::enable_submission,
   $submission_flags = $postfix::params::submission_flags,
+  $smtpd_tls_auth_only = $postfix::params::smtpd_tls_auth_only,
+  $smtpd_tls_capath = $postfix::params::smtpd_tls_capath,
+  $smtpd_tls_cert_file = $postfix::params::smtpd_tls_cert_file,
+  $smtpd_tls_key_file = $postfix::params::smtpd_tls_key_file,
+  $smtpd_use_tls = $postfix::params::smtpd_use_tls,
+  $smtp_use_tls = $postfix::params::smtp_use_tls,
+  $smtpd_tls_received_header = $postfix::params::smtpd_tls_received_header,
+  $smtp_tls_note_starttls_offer = $postfix::params::smtp_tls_note_starttls_offer,
 
 ) inherits postfix::params {
 
@@ -115,6 +123,14 @@ class postfix (
     amavis_listen_host              => $amavis_listen_host,
     enable_submission               => $enable_submission,
     submission_flags                => $submission_flags,
+    smtpd_tls_auth_only             => $smtpd_tls_auth_only,
+    smtpd_tls_capath                => $smtpd_tls_capath,
+    smtpd_tls_cert_file             => $smtpd_tls_cert_file,
+    smtpd_tls_key_file              => $smtpd_tls_key_file,
+    smtpd_use_tls                   => $smtpd_use_tls,
+    smtp_use_tls                    => $smtp_use_tls,
+    smtpd_tls_received_header       => $smtpd_tls_received_header,
+    smtp_tls_note_starttls_offer    => $smtp_tls_note_starttls_offer,
   }
 
   if $activate_postfix {
