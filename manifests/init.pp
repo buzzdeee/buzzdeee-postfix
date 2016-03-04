@@ -55,6 +55,9 @@ class postfix (
   $mail_config_type  = $postfix::params::mail_config_type,
   $myhostname        = $postfix::params::myhostname,
   $relayhost         = $postfix::params::relayhost,
+  $mydomain          = $postfix::params::mydomain,
+  $myorigin          = $postfix::params::myorigin,
+  $mydestination     = $postfix::params::mydestination,
 ) inherits postfix::params {
 
   class { 'postfix::install':
@@ -74,6 +77,9 @@ class postfix (
     mail_config_type  => $mail_config_type,
     myhostname        => $myhostname,
     relayhost         => $relayhost,
+    mydomain          => $mydomain,
+    myorigin          => $myorigin,
+    mydestination     => $mydestination,
   }
 
   if $activate_postfix {

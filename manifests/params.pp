@@ -39,6 +39,9 @@ class postfix::params {
   $aliases = undef
   $myhostname = $::fqdn
   $relayhost = undef
+  $mydomain = undef
+  $mydestination = undef
+  $myorigin = $::fqdn
   $maps = []
   $main_cf = '/etc/postfix/main.cf'
   $package_ensure = 'installed'

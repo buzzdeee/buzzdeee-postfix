@@ -13,6 +13,9 @@ class postfix::config (
   $mail_config_type,
   $myhostname,
   $relayhost,
+  $myorigin,
+  $mydestination,
+  $mydomain,
 ) {
   if $sysconfig_mail {
     ini_setting { 'configtype_sysconfig_mail':
@@ -41,6 +44,30 @@ class postfix::config (
     line  => "relayhost = $relayhost",
     match => '^relayhost =\s',
   }
+  ini_setting { 'myorigin_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'myorigin',
+    value             => $myorigin,
+  }
+  ini_setting { 'mydestination_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'mydestination',
+    value             => $mydestination,
+  }
+  ini_setting { 'mydomain_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'mydomain',
+    value             => $mydomain,
+  }
   ini_setting { 'myhostname_main_cf':
     ensure            => present,
     path              => $main_cf,
@@ -49,7 +76,7 @@ class postfix::config (
     setting           => 'myhostname',
     value             => $myhostname,
   }
-  ini_setting { 'myhostname_alias_maps':
+  ini_setting { 'alias_maps_main_cf':
     ensure            => present,
     path              => $main_cf,
     section           => '',
@@ -57,7 +84,7 @@ class postfix::config (
     setting           => 'alias_maps',
     value             => "hash:${alias_map}",
   }
-  ini_setting { 'myhostname_newaliases_path':
+  ini_setting { 'newaliases_path_main_cf':
     ensure            => present,
     path              => $main_cf,
     section           => '',
