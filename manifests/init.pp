@@ -84,6 +84,7 @@ class postfix (
   $smtpd_tls_received_header = $postfix::params::smtpd_tls_received_header,
   $smtp_tls_note_starttls_offer = $postfix::params::smtp_tls_note_starttls_offer,
   $inet_protocols = $postfix::params::inet_protocols,
+  $mailbox_transport = $postfix::params::mailbox_transport,
 ) inherits postfix::params {
 
   class { 'postfix::install':
@@ -132,6 +133,7 @@ class postfix (
     smtpd_tls_received_header       => $smtpd_tls_received_header,
     smtp_tls_note_starttls_offer    => $smtp_tls_note_starttls_offer,
     inet_protocols                  => $inet_protocols,
+    mailbox_transport               => $mailbox_transport,
   }
 
   if $activate_postfix {

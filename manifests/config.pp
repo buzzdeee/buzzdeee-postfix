@@ -42,6 +42,7 @@ class postfix::config (
   $smtpd_tls_received_header,
   $smtp_tls_note_starttls_offer,
   $inet_protocols,
+  $mailbox_transport,
 ) {
   if $sysconfig_mail {
     ini_setting { 'configtype_sysconfig_mail':
@@ -76,6 +77,14 @@ class postfix::config (
     path  => $main_cf,
     line  => "relayhost = $relayhost",
     match => '^relayhost =\s',
+  }
+  ini_setting { 'mailbox_transport_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'mailbox_transport',
+    value             => $mailbox_transport,
   }
   ini_setting { 'inet_protocols_main_cf':
     ensure            => present,
