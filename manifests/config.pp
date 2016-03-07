@@ -43,6 +43,7 @@ class postfix::config (
   $smtp_tls_note_starttls_offer,
   $inet_protocols,
   $mailbox_transport,
+  $chroot_lmtp,
 ) {
   if $sysconfig_mail {
     ini_setting { 'configtype_sysconfig_mail':

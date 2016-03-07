@@ -78,4 +78,6 @@ class postfix::params {
   $smtp_tls_note_starttls_offer = 'no'
   $inet_protocols = 'ipv4'
   $mailbox_transport = undef
+
+  $chroot_lmtp = true
 }

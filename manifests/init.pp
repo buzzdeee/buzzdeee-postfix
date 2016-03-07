@@ -85,6 +85,7 @@ class postfix (
   $smtp_tls_note_starttls_offer = $postfix::params::smtp_tls_note_starttls_offer,
   $inet_protocols = $postfix::params::inet_protocols,
   $mailbox_transport = $postfix::params::mailbox_transport,
+  $chroot_lmtp = $postfix::params::chroot_lmtp,
 ) inherits postfix::params {
 
   class { 'postfix::install':
@@ -134,6 +135,7 @@ class postfix (
     smtp_tls_note_starttls_offer    => $smtp_tls_note_starttls_offer,
     inet_protocols                  => $inet_protocols,
     mailbox_transport               => $mailbox_transport,
+    chroot_lmtp                     => $chroot_lmtp,
   }
 
   if $activate_postfix {
