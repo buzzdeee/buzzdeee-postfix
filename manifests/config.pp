@@ -48,6 +48,7 @@ class postfix::config (
   $setgid_group,
   $daemon_directory,
   $compatibility_level,
+  $command_directory,
 ) {
   if $sysconfig_mail {
     ini_setting { 'configtype_sysconfig_mail':
@@ -98,6 +99,14 @@ class postfix::config (
     key_val_separator => ' = ',
     setting           => 'inet_protocols',
     value             => $inet_protocols,
+  }
+  ini_setting { 'command_directory_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'command_directory',
+    value             => $command_directory,
   }
   ini_setting { 'mail_owner_main_cf':
     ensure            => present,

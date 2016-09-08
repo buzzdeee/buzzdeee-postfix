@@ -90,6 +90,7 @@ class postfix (
   $setgid_group = $postfix::params::setgid_group,
   $daemon_directory = $postfix::params::daemon_directory,
   $compatibility_level = $postfix::params::compatibility_level,
+  $command_directory = $postfix::params::command_directory,
 ) inherits postfix::params {
 
   class { 'postfix::install':
@@ -144,6 +145,7 @@ class postfix (
     setgid_group                    => $setgid_group,
     daemon_directory                => $daemon_directory,
     compatibility_level             => $compatibility_level,
+    command_directory               => $command_directory,
   }
 
   if $activate_postfix {

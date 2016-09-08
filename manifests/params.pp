@@ -13,6 +13,7 @@ class postfix::params {
       $mail_owner = '_postfix'
       $setgid_group = '_postdrop'
       $daemon_directory = '/usr/local/libexec/postfix'
+      $command_directory = '/usr/local/sbin'
       $compatibility_level = '2'
     }
     'Suse': {
@@ -36,6 +37,7 @@ class postfix::params {
       $mail_owner = 'postfix'
       $setgid_group = 'postdrop'
       $daemon_directory = '/usr/libexec/postfix'
+      $command_directory = '/usr/sbin'
       $compatibility_level = undef
     }
     default: {
