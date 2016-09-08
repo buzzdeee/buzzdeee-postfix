@@ -11,6 +11,7 @@ class postfix::params {
       $sysconfig_postfix = undef
       $mail_config_type = undef
       $mail_owner = '_postfix'
+      $setgid_group = '_postdrop'
     }
     'Suse': {
       case $::operatingsystem {
@@ -31,6 +32,7 @@ class postfix::params {
       $sysconfig_postfix = '/etc/sysconfig/postfix'
       $mail_config_type = 'standard'
       $mail_owner = 'postfix'
+      $setgid_group = 'postdrop'
     }
     default: {
       fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${::osfamily}")
