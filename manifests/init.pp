@@ -86,6 +86,7 @@ class postfix (
   $inet_protocols = $postfix::params::inet_protocols,
   $mailbox_transport = $postfix::params::mailbox_transport,
   $chroot_lmtp = $postfix::params::chroot_lmtp,
+  $mail_owner = $postfix::params::mail_owner,
 ) inherits postfix::params {
 
   class { 'postfix::install':
@@ -136,6 +137,7 @@ class postfix (
     inet_protocols                  => $inet_protocols,
     mailbox_transport               => $mailbox_transport,
     chroot_lmtp                     => $chroot_lmtp,
+    mail_owner                      => $mail_owner,
   }
 
   if $activate_postfix {

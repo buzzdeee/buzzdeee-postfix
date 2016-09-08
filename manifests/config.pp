@@ -44,6 +44,7 @@ class postfix::config (
   $inet_protocols,
   $mailbox_transport,
   $chroot_lmtp,
+  $mail_owner,
 ) {
   if $sysconfig_mail {
     ini_setting { 'configtype_sysconfig_mail':
@@ -94,6 +95,14 @@ class postfix::config (
     key_val_separator => ' = ',
     setting           => 'inet_protocols',
     value             => $inet_protocols,
+  }
+  ini_setting { 'mail_owner_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'mail_owner',
+    value             => $mail_owner,
   }
   ini_setting { 'smtp_tls_note_starttls_offer_main_cf':
     ensure            => present,
