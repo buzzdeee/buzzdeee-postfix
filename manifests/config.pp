@@ -46,6 +46,8 @@ class postfix::config (
   $chroot_lmtp,
   $mail_owner,
   $setgid_group,
+  $daemon_directory,
+  $compatibility_level,
 ) {
   if $sysconfig_mail {
     ini_setting { 'configtype_sysconfig_mail':
@@ -112,6 +114,22 @@ class postfix::config (
     key_val_separator => ' = ',
     setting           => 'setgid_group',
     value             => $setgid_group,
+  }
+  ini_setting { 'daemon_directory_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'daemon_directory',
+    value             => $daemon_directory,
+  }
+  ini_setting { 'compatibility_level_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'compatibility_level',
+    value             => $compatibility_level,
   }
   ini_setting { 'smtp_tls_note_starttls_offer_main_cf':
     ensure            => present,

@@ -88,6 +88,8 @@ class postfix (
   $chroot_lmtp = $postfix::params::chroot_lmtp,
   $mail_owner = $postfix::params::mail_owner,
   $setgid_group = $postfix::params::setgid_group,
+  $daemon_directory = $postfix::params::daemon_directory,
+  $compatibility_level = $postfix::params::compatibility_level,
 ) inherits postfix::params {
 
   class { 'postfix::install':
@@ -140,6 +142,8 @@ class postfix (
     chroot_lmtp                     => $chroot_lmtp,
     mail_owner                      => $mail_owner,
     setgid_group                    => $setgid_group,
+    daemon_directory                => $daemon_directory,
+    compatibility_level             => $compatibility_level,
   }
 
   if $activate_postfix {
