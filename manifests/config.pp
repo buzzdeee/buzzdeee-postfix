@@ -6,7 +6,6 @@ class postfix::config (
   $alias_map,
   $newaliases,
   $postmap,
-  $maps,
   $main_cf,
   $master_cf,
   $sysconfig_mail,
@@ -73,15 +72,15 @@ class postfix::config (
   }
 
   file { $master_cf:
-    owner => 'root',
-    group => '0',
-    mode  => '0644',
+    owner   => 'root',
+    group   => '0',
+    mode    => '0644',
     content => template('postfix/master.cf.erb')
   }
 
   file_line { 'relayhost_main_cf':
     path  => $main_cf,
-    line  => "relayhost = $relayhost",
+    line  => "relayhost = ${relayhost}",
     match => '^relayhost =\s',
   }
   ini_setting { 'mailbox_transport_main_cf':

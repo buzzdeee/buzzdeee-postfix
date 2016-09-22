@@ -87,6 +87,7 @@ class postfix (
   $mailbox_transport = $postfix::params::mailbox_transport,
   $chroot_lmtp = $postfix::params::chroot_lmtp,
   $mail_owner = $postfix::params::mail_owner,
+  $mail_group = $postfix::params::mail_group,
   $setgid_group = $postfix::params::setgid_group,
   $daemon_directory = $postfix::params::daemon_directory,
   $compatibility_level = $postfix::params::compatibility_level,
@@ -103,7 +104,6 @@ class postfix (
     alias_map                       => $alias_map,
     newaliases                      => $newaliases,
     postmap                         => $postmap,
-    maps                            => $maps,
     main_cf                         => $main_cf,
     master_cf                       => $master_cf,
     sysconfig_mail                  => $sysconfig_mail,
@@ -168,6 +168,7 @@ class postfix (
     postmap                         => $postmap,
     smtp_sasl_password_maps         => $smtp_sasl_password_maps,
     sender_dependent_relayhost_maps => $sender_dependent_relayhost_maps,
+    mail_group                      => $mail_group,
   }
 
   class { 'postfix::service':

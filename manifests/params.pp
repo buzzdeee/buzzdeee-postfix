@@ -11,6 +11,7 @@ class postfix::params {
       $sysconfig_postfix = undef
       $mail_config_type = undef
       $mail_owner = '_postfix'
+      $mail_group = '_postfix'
       $setgid_group = '_postdrop'
       $daemon_directory = '/usr/local/libexec/postfix'
       $command_directory = '/usr/local/sbin'
@@ -35,6 +36,7 @@ class postfix::params {
       $sysconfig_postfix = '/etc/sysconfig/postfix'
       $mail_config_type = 'standard'
       $mail_owner = 'postfix'
+      $mail_group = 'postfix'
       $setgid_group = 'postdrop'
       $daemon_directory = '/usr/libexec/postfix'
       $command_directory = '/usr/sbin'

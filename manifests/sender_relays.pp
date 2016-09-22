@@ -5,18 +5,19 @@ class postfix::sender_relays (
   $postmap,
   $smtp_sasl_password_maps,
   $sender_dependent_relayhost_maps,
+  $mail_group,
 ) {
 
   file { $smtp_sasl_password_maps:
     owner   => 'root',
-    group   => $postfix_group,
+    group   => $mail_group,
     mode    => '0640',
     content => template('postfix/passwd_map.erb'),
     notify  => Exec["postmap ${smtp_sasl_password_maps}"],
   }
   file { $sender_dependent_relayhost_maps:
     owner   => 'root',
-    group   => $postfix_group,
+    group   => $mail_group,
     mode    => '0640',
     content => template('postfix/sender_relay_map.erb'),
     notify  => Exec["postmap ${sender_dependent_relayhost_maps}"],
