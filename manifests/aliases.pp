@@ -8,7 +8,7 @@ class postfix::aliases (
   create_resources(mailalias, $aliases, {notify => Exec['update mail aliases']})
 
   Class['postfix::install'] ->
-  Mailalias <| target == $alias_map |>
+  Mailalias <| target == $postfix::alias_map |>
 
   exec { 'update mail aliases':
     command     => $newaliases,

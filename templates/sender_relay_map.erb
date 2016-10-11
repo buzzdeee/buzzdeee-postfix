@@ -1,0 +1,3 @@
+<%- @senders_map_hash.each do |sender, value| -%>
+<%= sender %>		<%= value['server'] %>:<%= value['port'] %>
+<%- end -%>
