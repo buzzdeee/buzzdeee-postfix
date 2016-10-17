@@ -1,3 +1,3 @@
 <%- @senders_map_hash.each do |sender, value| -%>
-<%= sender %>		<%= value['remote_user'] %>:<%= value['remote_password'] %>
+<%- if value['pwtype'] == 'sender_password' -%><%= sender %><%- else -%><%= value['server'] %><%- end -%>		<%= value['remote_user'] %>:<%= value['remote_password'] %>
 <%- end -%>
