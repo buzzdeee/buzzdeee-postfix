@@ -52,6 +52,11 @@ class postfix::params {
           $newaliases = '/usr/bin/newaliases'
           $sysconfig_postfix = undef
           $mail_config_type = undef
+          $mail_owner = 'postfix'
+          $mail_group = 'postfix'
+          $setgid_group = 'postdrop'
+          $daemon_directory = '/usr/lib/postfix/sbin'
+          $command_directory = '/usr/sbin'
         }
         default: {
           fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${::osfamily}/${::operatingsystem}")

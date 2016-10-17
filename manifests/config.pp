@@ -131,13 +131,15 @@ class postfix::config (
     setting           => 'daemon_directory',
     value             => $daemon_directory,
   }
-  ini_setting { 'compatibility_level_main_cf':
-    ensure            => present,
-    path              => $main_cf,
-    section           => '',
-    key_val_separator => ' = ',
-    setting           => 'compatibility_level',
-    value             => $compatibility_level,
+  if $compatibility_level {
+    ini_setting { 'compatibility_level_main_cf':
+      ensure            => present,
+      path              => $main_cf,
+      section           => '',
+      key_val_separator => ' = ',
+      setting           => 'compatibility_level',
+      value             => $compatibility_level,
+    }
   }
   ini_setting { 'smtp_tls_note_starttls_offer_main_cf':
     ensure            => present,
@@ -291,13 +293,15 @@ class postfix::config (
     setting           => 'mydestination',
     value             => $mydestination,
   }
-  ini_setting { 'mydomain_main_cf':
-    ensure            => present,
-    path              => $main_cf,
-    section           => '',
-    key_val_separator => ' = ',
-    setting           => 'mydomain',
-    value             => $mydomain,
+  if $mydomain {
+    ini_setting { 'mydomain_main_cf':
+      ensure            => present,
+      path              => $main_cf,
+      section           => '',
+      key_val_separator => ' = ',
+      setting           => 'mydomain',
+      value             => $mydomain,
+    }
   }
   ini_setting { 'myhostname_main_cf':
     ensure            => present,
