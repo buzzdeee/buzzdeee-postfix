@@ -48,6 +48,7 @@ class postfix::config (
   $daemon_directory,
   $compatibility_level,
   $command_directory,
+  $run_chrooted,
 ) {
   if $sysconfig_mail {
     ini_setting { 'configtype_sysconfig_mail':

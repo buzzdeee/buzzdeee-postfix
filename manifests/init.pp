@@ -92,6 +92,7 @@ class postfix (
   $daemon_directory = $postfix::params::daemon_directory,
   $compatibility_level = $postfix::params::compatibility_level,
   $command_directory = $postfix::params::command_directory,
+  $run_chrooted = $::postfix::params::run_chrooted,
 ) inherits postfix::params {
 
   class { 'postfix::install':
@@ -146,6 +147,7 @@ class postfix (
     daemon_directory                => $daemon_directory,
     compatibility_level             => $compatibility_level,
     command_directory               => $command_directory,
+    run_chrooted                    => $run_chrooted,
   }
 
   if $activate_postfix {

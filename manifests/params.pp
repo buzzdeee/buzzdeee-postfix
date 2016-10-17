@@ -16,6 +16,7 @@ class postfix::params {
       $daemon_directory = '/usr/local/libexec/postfix'
       $command_directory = '/usr/local/sbin'
       $compatibility_level = '2'
+      $run_chrooted = true
     }
     'Suse': {
       case $::operatingsystem {
@@ -41,6 +42,7 @@ class postfix::params {
       $daemon_directory = '/usr/lib/postfix'
       $command_directory = '/usr/sbin'
       $compatibility_level = undef
+      $run_chrooted = false
     }
     'Debian': {
       case $::operatingsystem {
@@ -57,6 +59,7 @@ class postfix::params {
           $setgid_group = 'postdrop'
           $daemon_directory = '/usr/lib/postfix/sbin'
           $command_directory = '/usr/sbin'
+          $run_chrooted = true
         }
         default: {
           fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${::osfamily}/${::operatingsystem}")
