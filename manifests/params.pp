@@ -38,7 +38,7 @@ class postfix::params {
       $mail_owner = 'postfix'
       $mail_group = 'postfix'
       $setgid_group = 'maildrop'
-      $daemon_directory = '/usr/libexec/postfix'
+      $daemon_directory = '/usr/lib/postfix'
       $command_directory = '/usr/sbin'
       $compatibility_level = undef
     }
