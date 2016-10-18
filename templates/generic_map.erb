@@ -1,0 +1,3 @@
+<%- @smtp_generic_map_hash.each do |generic, value| -%>
+<%= value['regex_match'] %>		<%= value['rewrite_to'] %>
+<%- end -%>

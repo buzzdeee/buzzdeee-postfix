@@ -1,0 +1,3 @@
+<%- @senders_canonical_hash.each do |sender, value| -%>
+<%= value['regex_match'] %>		<%= value['rewrite_to'] %>
+<%- end -%>

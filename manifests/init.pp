@@ -48,7 +48,9 @@ class postfix (
   $aliases           = $postfix::params::aliases,
   $alias_map         = $postfix::params::alias_map,
   $newaliases        = $postfix::params::newaliases,
-  $senders_map_hash  = $postfix::params::senders_map_hash,
+  $senders_map_hash       = {},
+  $senders_canonical_hash = {},
+  $smtp_generic_map_hash  = {},
   $main_cf           = $postfix::params::main_cf,
   $master_cf         = $postfix::params::master_cf,
   $sysconfig_mail    = $postfix::params::sysconfig_mail,
@@ -59,15 +61,18 @@ class postfix (
   $mydomain          = $postfix::params::mydomain,
   $myorigin          = $postfix::params::myorigin,
   $mydestination     = $postfix::params::mydestination,
+  $mynetworks        = undef,
   $smtpd_sasl_auth_enable = $postfix::params::smtpd_sasl_auth_enable,
   $smtpd_sasl_path = $postfix::params::smtpd_sasl_path,
   $smtpd_sasl_local_domain = $postfix::params::smtpd_sasl_local_domain,
   $smtpd_sasl_security_options = $postfix::params::smtpd_sasl_security_options,
   $smtp_sasl_auth_enable = $postfix::params::smtp_sasl_auth_enable,
-  $smtp_sasl_password_maps = $postfix::params::smtp_sasl_password_maps,
   $smtp_sasl_security_options = $postfix::params::smtp_sasl_security_options,
   $smtp_sasl_tls_security_options = $postfix::params::smtp_sasl_tls_security_options,
-  $sender_dependent_relayhost_maps = $postfix::params::sender_dependent_relayhost_maps,
+  $smtp_sasl_password_maps         = '/etc/postfix/sasl_passwd',
+  $sender_canonical_maps           = '/etc/postfix/sender_canonical',
+  $sender_dependent_relayhost_maps = '/etc/postfix/sender_relay',
+  $smtp_generic_maps               = '/etc/postfix/generic',
   $relay_to_amavis = $postfix::params::relay_to_amavis,
   $amavis_dst_host = $postfix::params::amavis_dst_host,
   $amavis_dst_port = $postfix::params::amavis_dst_port,
@@ -115,6 +120,7 @@ class postfix (
     mydomain                        => $mydomain,
     myorigin                        => $myorigin,
     mydestination                   => $mydestination,
+    mynetworks                      => $mynetworks,
     smtpd_sasl_auth_enable          => $smtpd_sasl_auth_enable,
     smtpd_sasl_path                 => $smtpd_sasl_path,
     smtpd_sasl_local_domain         => $smtpd_sasl_local_domain,
@@ -124,6 +130,8 @@ class postfix (
     smtp_sasl_security_options      => $smtp_sasl_security_options,
     smtp_sasl_tls_security_options  => $smtp_sasl_tls_security_options,
     sender_dependent_relayhost_maps => $sender_dependent_relayhost_maps,
+    smtp_generic_maps               => $smtp_generic_maps,
+    sender_canonical_maps           => $sender_canonical_maps,
     relay_to_amavis                 => $relay_to_amavis,
     amavis_dst_host                 => $amavis_dst_host,
     amavis_dst_port                 => $amavis_dst_port,
@@ -172,6 +180,18 @@ class postfix (
     sender_dependent_relayhost_maps => $sender_dependent_relayhost_maps,
     mail_group                      => $mail_group,
   }
+  class { 'postfix::sender_canonicals':
+    senders_canonical_hash => $senders_canonical_hash,
+    postmap                => $postmap,
+    sender_canonical_maps  => $sender_canonical_maps,
+    mail_group             => $mail_group,
+  }
+  class { 'postfix::smtp_generics':
+    smtp_generic_map_hash => $smtp_generic_map_hash,
+    postmap               => $postmap,
+    smtp_generic_maps     => $smtp_generic_maps,
+    mail_group            => $mail_group,
+  }
 
   class { 'postfix::service':
     service_name   => $service_name,
@@ -184,5 +204,7 @@ class postfix (
   Class['postfix::config'] ~>
   Class['postfix::aliases'] ~>
   Class['postfix::sender_relays'] ~>
+  Class['postfix::sender_canonicals'] ~>
+  Class['postfix::smtp_generics'] ~>
   Class['postfix::service']
 }

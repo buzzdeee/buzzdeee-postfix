@@ -16,6 +16,7 @@ class postfix::config (
   $myorigin,
   $mydestination,
   $mydomain,
+  $mynetworks,
   $smtpd_sasl_auth_enable,
   $smtpd_sasl_path,
   $smtpd_sasl_local_domain,
@@ -25,6 +26,8 @@ class postfix::config (
   $smtp_sasl_security_options,
   $smtp_sasl_tls_security_options,
   $sender_dependent_relayhost_maps,
+  $sender_canonical_maps,
+  $smtp_generic_maps,
   $relay_to_amavis,
   $amavis_dst_host,
   $amavis_dst_port,
@@ -222,6 +225,22 @@ class postfix::config (
     setting           => 'sender_dependent_relayhost_maps',
     value             => "hash:${sender_dependent_relayhost_maps}",
   }
+  ini_setting { 'sender_canonical_maps_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'sender_canonical_maps',
+    value             => "regexp:${sender_canonical_maps}",
+  }
+  ini_setting { 'smtp_generic_maps_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtp_generic_maps',
+    value             => "regexp:${smtp_generic_maps}",
+  }
   ini_setting { 'smtp_sasl_tls_security_options_main_cf':
     ensure            => present,
     path              => $main_cf,
@@ -293,6 +312,16 @@ class postfix::config (
     key_val_separator => ' = ',
     setting           => 'mydestination',
     value             => $mydestination,
+  }
+  if $mynetworks {
+    ini_setting { 'mynetworks_main_cf':
+      ensure            => present,
+      path              => $main_cf,
+      section           => '',
+      key_val_separator => ' = ',
+      setting           => 'mynetworks',
+      value             => $mynetworks,
+    }
   }
   if $mydomain {
     ini_setting { 'mydomain_main_cf':
