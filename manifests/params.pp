@@ -57,7 +57,14 @@ class postfix::params {
           $mail_owner = 'postfix'
           $mail_group = 'postfix'
           $setgid_group = 'postdrop'
-          $daemon_directory = '/usr/lib/postfix/sbin'
+          case $::operatingsystemmajrelease {
+            '14.04': {
+              $daemon_directory = '/usr/lib/postfix'
+            }
+            default: {
+              $daemon_directory = '/usr/lib/postfix/sbin'
+            }
+          }
           $command_directory = '/usr/sbin'
           $run_chrooted = true
         }
