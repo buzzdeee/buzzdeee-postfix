@@ -177,29 +177,20 @@ class postfix::config (
     setting           => 'smtpd_use_tls',
     value             => $smtpd_use_tls,
   }
-  ini_setting { 'smtpd_tls_key_file_main_cf':
-    ensure            => present,
-    path              => $main_cf,
-    section           => '',
-    key_val_separator => ' = ',
-    setting           => 'smtpd_tls_key_file',
-    value             => $smtpd_tls_key_file,
+  file_line { 'smtpd_tls_key_file_main_cf':
+    path  => $main_cf,
+    line  => "smtpd_tls_key_file = ${smtpd_tls_key_file}",
+    match => '^smtpd_tls_key_file =\s',
   }
-  ini_setting { 'smtpd_tls_cert_file_main_cf':
-    ensure            => present,
-    path              => $main_cf,
-    section           => '',
-    key_val_separator => ' = ',
-    setting           => 'smtpd_tls_cert_file',
-    value             => $smtpd_tls_cert_file,
+  file_line { 'smtpd_tls_cert_file_main_cf':
+    path  => $main_cf,
+    line  => "smtpd_tls_cert_file = ${smtpd_tls_cert_file}",
+    match => '^smtpd_tls_cert_file =\s',
   }
-  ini_setting { 'smtpd_tls_capath_main_cf':
-    ensure            => present,
-    path              => $main_cf,
-    section           => '',
-    key_val_separator => ' = ',
-    setting           => 'smtpd_tls_CApath',
-    value             => $smtpd_tls_capath,
+  file_line { 'smtpd_tls_capath_main_cf':
+    path  => $main_cf,
+    line  => "smtpd_tls_CApath = ${smtpd_tls_capath}",
+    match => '^smtpd_tls_CApath =\s',
   }
   ini_setting { 'smtpd_tls_auth_only_main_cf':
     ensure            => present,
@@ -257,13 +248,10 @@ class postfix::config (
     setting           => 'smtp_sasl_security_options',
     value             => $smtp_sasl_security_options,
   }
-  ini_setting { 'smtp_sasl_password_maps_main_cf':
-    ensure            => present,
-    path              => $main_cf,
-    section           => '',
-    key_val_separator => ' = ',
-    setting           => 'smtp_sasl_password_maps',
-    value             => "hash:${smtp_sasl_password_maps}",
+  file_line { 'smtp_sasl_password_maps_main_cf':
+    path  => $main_cf,
+    line  => "smtp_sasl_password_maps = hash:${smtp_sasl_password_maps}",
+    match => '^smtp_sasl_password_maps =\s',
   }
   ini_setting { 'smtp_sasl_auth_enable_main_cf':
     ensure            => present,
