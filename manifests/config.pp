@@ -232,13 +232,10 @@ class postfix::config (
     setting           => 'smtp_generic_maps',
     value             => "regexp:${smtp_generic_maps}",
   }
-  ini_setting { 'smtp_sasl_tls_security_options_main_cf':
-    ensure            => present,
-    path              => $main_cf,
-    section           => '',
-    key_val_separator => ' = ',
-    setting           => 'smtp_sasl_tls_security_options',
-    value             => $smtp_sasl_tls_security_options,
+  file_line { 'smtp_sasl_security_options_main_cf':
+    path  => $main_cf,
+    line  => "smtp_sasl_security_options = ${smtp_sasl_security_options}",
+    match => '^smtp_sasl_security_options =\s',
   }
   ini_setting { 'smtp_sasl_security_options_main_cf':
     ensure            => present,
