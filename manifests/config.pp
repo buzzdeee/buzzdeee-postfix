@@ -261,13 +261,10 @@ class postfix::config (
     setting           => 'smtp_sasl_auth_enable',
     value             => $smtp_sasl_auth_enable,
   }
-  ini_setting { 'smtpd_sasl_security_options_main_cf':
-    ensure            => present,
-    path              => $main_cf,
-    section           => '',
-    key_val_separator => ' = ',
-    setting           => 'smtpd_sasl_security_options',
-    value             => $smtpd_sasl_security_options,
+  file_line { 'smtpd_sasl_security_options_main_cf':
+    path  => $main_cf,
+    line  => "smtpd_sasl_security_options = ${smtpd_sasl_security_options}",
+    match => '^smtpd_sasl_security_options =\s',
   }
   ini_setting { 'smtpd_sasl_local_domain_main_cf':
     ensure            => present,
