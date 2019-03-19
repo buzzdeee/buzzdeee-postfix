@@ -28,6 +28,7 @@ class postfix::config (
   $sender_dependent_relayhost_maps,
   $sender_canonical_maps,
   $smtp_generic_maps,
+  $sender_access_file,
   $relay_to_amavis,
   $amavis_dst_host,
   $amavis_dst_port,
@@ -231,6 +232,14 @@ class postfix::config (
     key_val_separator => ' = ',
     setting           => 'smtp_generic_maps',
     value             => "regexp:${smtp_generic_maps}",
+  }
+  ini_setting { 'smtpd_recipient_restrictions_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_recipient_restrictions',
+    value             => "check_sender_access regexp:${sender_access_file}",
   }
   file_line { 'smtp_sasl_security_options_main_cf':
     path  => $main_cf,

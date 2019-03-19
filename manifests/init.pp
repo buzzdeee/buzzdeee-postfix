@@ -51,6 +51,7 @@ class postfix (
   $senders_map_hash       = {},
   $senders_canonical_hash = {},
   $smtp_generic_map_hash  = {},
+  $sender_access_regex    = {},
   $main_cf           = $postfix::params::main_cf,
   $master_cf         = $postfix::params::master_cf,
   $sysconfig_mail    = $postfix::params::sysconfig_mail,
@@ -73,6 +74,7 @@ class postfix (
   $sender_canonical_maps           = '/etc/postfix/sender_canonical',
   $sender_dependent_relayhost_maps = '/etc/postfix/sender_relay',
   $smtp_generic_maps               = '/etc/postfix/generic',
+  $check_sender_access             = '/etc/postfix/sender_access',
   $relay_to_amavis = $postfix::params::relay_to_amavis,
   $amavis_dst_host = $postfix::params::amavis_dst_host,
   $amavis_dst_port = $postfix::params::amavis_dst_port,
@@ -131,6 +133,7 @@ class postfix (
     smtp_sasl_tls_security_options  => $smtp_sasl_tls_security_options,
     sender_dependent_relayhost_maps => $sender_dependent_relayhost_maps,
     smtp_generic_maps               => $smtp_generic_maps,
+    sender_access_file              => $check_sender_access,
     sender_canonical_maps           => $sender_canonical_maps,
     relay_to_amavis                 => $relay_to_amavis,
     amavis_dst_host                 => $amavis_dst_host,
@@ -191,6 +194,11 @@ class postfix (
     postmap               => $postmap,
     smtp_generic_maps     => $smtp_generic_maps,
     mail_group            => $mail_group,
+  }
+  class { 'postfix::sender_access':
+    sender_access_regex => $sender_access_regex,
+    sender_access_file  => $check_sender_access,
+    mail_group          => $mail_group,
   }
 
   class { 'postfix::service':

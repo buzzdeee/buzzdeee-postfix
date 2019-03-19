@@ -1,0 +1,3 @@
+<%- @sender_access_regex.each do |sender, value| -%>
+<%= value['regex_match'] %>		<%= value['action'] %>
+<%- end -%>
