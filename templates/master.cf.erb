@@ -39,3 +39,4 @@ virtual   unix  -       n       n       -       -       virtual
 lmtp      unix  -       -       <% if @chroot_lmtp == true -%>y<%- else -%>n<% end %>       -       -       lmtp
 anvil     unix  -       -       <%- if @run_chrooted -%>y<%- else -%>n<%- end -%>       -       1       anvil
 scache    unix  -       -       <%- if @run_chrooted -%>y<%- else -%>n<%- end -%>       -       1       scache
+policyd-spf  unix  -    n       n       -       0       spawn user=_postfix fargv=/usr/local/bin/policyd-spf

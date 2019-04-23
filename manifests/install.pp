@@ -12,4 +12,8 @@ class postfix::install (
     flavor => $package_flavor,
   }
 
+  package { 'py-policyd-spf':
+    ensure => installed,
+  }
+
 }
