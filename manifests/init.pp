@@ -100,6 +100,8 @@ class postfix (
   $compatibility_level = $postfix::params::compatibility_level,
   $command_directory = $postfix::params::command_directory,
   $run_chrooted = $::postfix::params::run_chrooted,
+  $message_size_limit = $::postfix::params::message_size_limit,
+  $mailbox_size_limit = $::postfix::params::mailbox_size_limit,
 ) inherits postfix::params {
 
   class { 'postfix::install':
@@ -159,6 +161,8 @@ class postfix (
     compatibility_level             => $compatibility_level,
     command_directory               => $command_directory,
     run_chrooted                    => $run_chrooted,
+    message_size_limit              => $message_size_limit,
+    mailbox_size_limit              => $mailbox_size_limit,
   }
 
   if $activate_postfix {

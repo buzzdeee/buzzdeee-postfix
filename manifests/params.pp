@@ -120,4 +120,6 @@ class postfix::params {
   $mailbox_transport = undef
 
   $chroot_lmtp = true
+  $message_size_limit = '10240000'
+  $mailbox_size_limit = '50240000'
 }

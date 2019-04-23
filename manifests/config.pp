@@ -53,6 +53,8 @@ class postfix::config (
   $compatibility_level,
   $command_directory,
   $run_chrooted,
+  $message_size_limit,
+  $mailbox_size_limit,
 ) {
   if $sysconfig_mail {
     ini_setting { 'configtype_sysconfig_mail':
@@ -295,6 +297,22 @@ class postfix::config (
     key_val_separator => ' = ',
     setting           => 'smtpd_sasl_auth_enable',
     value             => $smtpd_sasl_auth_enable,
+  }
+  ini_setting { 'message_size_limit_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'message_size_limit',
+    value             => $message_size_limit,
+  }
+  ini_setting { 'mailbox_size_limit_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'mailbox_size_limit',
+    value             => $mailbox_size_limit,
   }
   ini_setting { 'mydestination_main_cf':
     ensure            => present,

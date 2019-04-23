@@ -9,7 +9,7 @@
 # service type  private unpriv  chroot  wakeup  maxproc command + args
 #               (yes)   (yes)   (no)    (never) (100)
 # ==========================================================================
-smtp      inet  n       -       <%- if @run_chrooted -%>y<%- else -%>n<%- end -%>       -       -       smtpd <%- if @relay_to_amavis -%>-o content_filter=smtp:<%= @amavis_dst_host %>:<%= @amavis_dst_port %><%- end %>
+smtp      inet  n       -       <%- if @run_chrooted -%>y<%- else -%>n<%- end -%>       -       -       smtpd <%- if @relay_to_amavis -%>-o { content_filter = smtp:<%= @amavis_dst_host %>:<%= @amavis_dst_port %> } <%- end %> -o { smtpd_recipient_restrictions = check_policy_service unix:private/policyd-spf }
 <%- if @relay_to_amavis -%>
 <%= @amavis_listen_host %>:<%= @amavis_listen_port %> inet  n -       n       -       8       smtpd
 <%- end %>
@@ -39,4 +39,4 @@ virtual   unix  -       n       n       -       -       virtual
 lmtp      unix  -       -       <% if @chroot_lmtp == true -%>y<%- else -%>n<% end %>       -       -       lmtp
 anvil     unix  -       -       <%- if @run_chrooted -%>y<%- else -%>n<%- end -%>       -       1       anvil
 scache    unix  -       -       <%- if @run_chrooted -%>y<%- else -%>n<%- end -%>       -       1       scache
-policyd-spf  unix  -    n       n       -       0       spawn user=_postfix fargv=/usr/local/bin/policyd-spf
+policyd-spf  unix  -    n       n       -       0       spawn user=nobody argv=/usr/local/bin/policyd-spf
