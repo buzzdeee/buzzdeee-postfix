@@ -217,6 +217,7 @@ class postfix (
   Class['postfix::aliases'] ~>
   Class['postfix::sender_relays'] ~>
   Class['postfix::sender_canonicals'] ~>
+  Class['postfix::sender_access'] ~>
   Class['postfix::smtp_generics'] ~>
   Class['postfix::service']
 }
