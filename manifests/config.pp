@@ -4,6 +4,7 @@
 # are managed too
 class postfix::config (
   $alias_map,
+  $disable_vrfy_command,
   $newaliases,
   $postmap,
   $main_cf,
@@ -17,6 +18,7 @@ class postfix::config (
   $mydestination,
   $mydomain,
   $mynetworks,
+  $smtpd_helo_required,
   $smtpd_sasl_auth_enable,
   $smtpd_sasl_path,
   $smtpd_sasl_local_domain,
@@ -365,5 +367,21 @@ class postfix::config (
     key_val_separator => ' = ',
     setting           => 'newaliases_path',
     value             => $newaliases,
+  }
+  ini_setting { 'smtpd_helo_required':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_helo_required',
+    value             => $smtpd_helo_required,
+  }
+  ini_setting { 'disable_vrfy_command_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'disable_vrfy_command',
+    value             => $disable_vrfy_command,
   }
 }

@@ -47,6 +47,7 @@ class postfix (
   $postmap           = $postfix::params::postmap,
   $aliases           = $postfix::params::aliases,
   $alias_map         = $postfix::params::alias_map,
+  $disable_vrfy_command = $postfix::params::disable_vrfy_command,
   $newaliases        = $postfix::params::newaliases,
   $senders_map_hash       = {},
   $senders_canonical_hash = {},
@@ -63,6 +64,7 @@ class postfix (
   $myorigin          = $postfix::params::myorigin,
   $mydestination     = $postfix::params::mydestination,
   $mynetworks        = undef,
+  $smtpd_helo_required = $postfix::params::smtpd_helo_required,
   $smtpd_sasl_auth_enable = $postfix::params::smtpd_sasl_auth_enable,
   $smtpd_sasl_path = $postfix::params::smtpd_sasl_path,
   $smtpd_sasl_local_domain = $postfix::params::smtpd_sasl_local_domain,
@@ -112,6 +114,7 @@ class postfix (
 
   class { 'postfix::config':
     alias_map                       => $alias_map,
+    disable_vrfy_command            => $disable_vrfy_command,
     newaliases                      => $newaliases,
     postmap                         => $postmap,
     main_cf                         => $main_cf,
@@ -125,6 +128,7 @@ class postfix (
     myorigin                        => $myorigin,
     mydestination                   => $mydestination,
     mynetworks                      => $mynetworks,
+    smtpd_helo_required             => $smtpd_helo_required,
     smtpd_sasl_auth_enable          => $smtpd_sasl_auth_enable,
     smtpd_sasl_path                 => $smtpd_sasl_path,
     smtpd_sasl_local_domain         => $smtpd_sasl_local_domain,

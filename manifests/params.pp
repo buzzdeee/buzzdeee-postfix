@@ -80,6 +80,7 @@ class postfix::params {
 
   # $aliases is a hash {target => "recipients"}
   $aliases = undef
+  $disable_vrfy_command = 'yes'
   $myhostname = $::fqdn
   $relayhost = undef
   $mydomain = undef
@@ -94,6 +95,7 @@ class postfix::params {
   $service_enable = true
   $service_flags = undef
   $service_name = 'postfix'
+  $smtpd_helo_required = 'yes'
   $smtpd_sasl_auth_enable = 'no'
   $smtpd_sasl_path = 'smtpd'
   $smtpd_sasl_local_domain = '$mydomain'
