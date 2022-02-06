@@ -110,6 +110,7 @@ class postfix::params {
   $amavis_listen_host = 'localhost'
   $enable_submission = false
   $submission_flags = 'smtpd_recipient_restrictions=permit_sasl_authenticated,reject_unauth_destination'
+  $smtpd_data_restrictions = 'reject_unauth_pipelining, reject_multi_recipient_bounce, permit'
   $smtpd_tls_auth_only = 'no'
   $smtpd_tls_capath = '/etc/postfix/ssl/CA'
   $smtpd_tls_cert_file = "/etc/postfix/ssl/${::fqdn}.pem"

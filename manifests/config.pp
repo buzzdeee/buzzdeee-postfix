@@ -19,6 +19,7 @@ class postfix::config (
   $mydomain,
   $mynetworks,
   $smtpd_helo_required,
+  $smtpd_data_restrictions,
   $smtpd_sasl_auth_enable,
   $smtpd_sasl_path,
   $smtpd_sasl_local_domain,
@@ -383,5 +384,13 @@ class postfix::config (
     key_val_separator => ' = ',
     setting           => 'disable_vrfy_command',
     value             => $disable_vrfy_command,
+  }
+  ini_setting { 'smtpd_data_restrictions_main_cf':
+    ensure            => present,
+    path              => $main_cf,
+    section           => '',
+    key_val_separator => ' = ',
+    setting           => 'smtpd_data_restrictions',
+    value             => $smtpd_data_restrictions,
   }
 }
