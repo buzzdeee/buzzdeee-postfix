@@ -96,6 +96,8 @@ class postfix::params {
   $service_flags = undef
   $service_name = 'postfix'
   $smtpd_helo_required = 'yes'
+  $smtpd_helo_restrictions = 'reject_unknown_helo_hostname'
+  $smtpd_sender_restrictions = 'reject_unknown_sender_domain'
   $smtpd_sasl_auth_enable = 'no'
   $smtpd_sasl_path = 'smtpd'
   $smtpd_sasl_local_domain = '$mydomain'
