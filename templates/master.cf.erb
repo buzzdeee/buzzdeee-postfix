@@ -9,7 +9,7 @@
 # service type  private unpriv  chroot  wakeup  maxproc command + args
 #               (yes)   (yes)   (no)    (never) (100)
 # ==========================================================================
-smtp      inet  n       -       <%- if @run_chrooted -%>y<%- else -%>n<%- end -%>       -       -       smtpd <%- if @relay_to_amavis -%>-o { content_filter = smtp:<%= @amavis_dst_host %>:<%= @amavis_dst_port %> } <%- end %> -o { smtpd_recipient_restrictions = check_policy_service unix:private/policyd-spf }
+smtp      inet  n       -       <%- if @run_chrooted -%>y<%- else -%>n<%- end -%>       -       -       smtpd <%- if @relay_to_amavis -%>-o { content_filter = smtp:<%= @amavis_dst_host %>:<%= @amavis_dst_port %> } <%- end %>
 <%- if @relay_to_amavis -%>
 <%= @amavis_listen_host %>:<%= @amavis_listen_port %> inet  n -       n       -       8       smtpd
 <%- end %>

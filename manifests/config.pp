@@ -1,4 +1,4 @@
- This class takes care to manage entries
+# This class takes care to manage entries
 # in the postfix configuration files, currently
 # main.cf. On Suse, files in /etc/sysconfig
 # are managed too
@@ -246,7 +246,7 @@ class postfix::config (
     section           => '',
     key_val_separator => ' = ',
     setting           => 'smtpd_recipient_restrictions',
-    value             => "check_sender_access regexp:${sender_access_file}, permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination, reject_rbl_client zen.spamhaus.org, reject_rhsbl_reverse_client dbl.spamhaus.org, reject_rhsbl_helo dbl.spamhaus.org, reject_rhsbl_sender dbl.spamhaus.org, reject_rbl_client cbl.abuseat.org, reject_rbl_client sbl.spamhaus.org, reject_rbl_client pbl.spamhaus.org, reject_invalid_hostname, reject_non_fqdn_hostname, reject_non_fqdn_sender, reject_non_fqdn_recipient, reject_unknown_sender_domain, reject_unknown_recipient_domain, reject_rbl_client bl.spamcop.net, permit",
+    value             => "check_policy_service unix:private/policyd-spf, check_sender_access regexp:${sender_access_file}, permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination, reject_rbl_client zen.spamhaus.org, reject_rhsbl_reverse_client dbl.spamhaus.org, reject_rhsbl_helo dbl.spamhaus.org, reject_rhsbl_sender dbl.spamhaus.org, reject_rbl_client cbl.abuseat.org, reject_rbl_client sbl.spamhaus.org, reject_rbl_client pbl.spamhaus.org, reject_invalid_hostname, reject_non_fqdn_hostname, reject_non_fqdn_sender, reject_non_fqdn_recipient, reject_unknown_sender_domain, reject_unknown_recipient_domain, reject_rbl_client bl.spamcop.net, permit",
   }
   file_line { 'smtp_sasl_security_options_main_cf':
     path  => $main_cf,
