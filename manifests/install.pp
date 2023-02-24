@@ -12,7 +12,7 @@ class postfix::install (
     flavor => $package_flavor,
   }
 
-  package { 'py-policyd-spf':
+  package { 'py3-policyd-spf':
     ensure => installed,
   }
 
