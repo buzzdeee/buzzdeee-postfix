@@ -90,11 +90,6 @@ class postfix::config (
     content => template('postfix/master.cf.erb')
   }
 
-  file_line { 'relayhost_main_cf':
-    path  => $main_cf,
-    line  => "relayhost = ${relayhost}",
-    match => '^relayhost =\s',
-  }
   ini_setting { 'mailbox_transport_main_cf':
     ensure            => present,
     path              => $main_cf,
@@ -199,6 +194,11 @@ class postfix::config (
     path  => $main_cf,
     line  => "smtpd_tls_CApath = ${smtpd_tls_capath}",
     match => '^smtpd_tls_CApath =\s',
+  }
+  file_line { 'relayhost_main_cf':
+    path  => $main_cf,
+    line  => "relayhost = ${relayhost}",
+    match => '^relayhost =\s',
   }
   ini_setting { 'smtpd_tls_auth_only_main_cf':
     ensure            => present,
