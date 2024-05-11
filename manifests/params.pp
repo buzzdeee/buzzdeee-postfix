@@ -1,7 +1,7 @@
 # private class, do not use directly.
 # the parameters, that steer this module
 class postfix::params {
-  case $::osfamily {
+  case $facts['os']['family'] {
     'OpenBSD': {
       $alias_map = '/etc/mail/aliases'
       $activate_postfix = true
@@ -19,7 +19,7 @@ class postfix::params {
       $run_chrooted = true
     }
     'Suse': {
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         'SLES': {
           $sysconfig_mail = undef
         }
@@ -27,7 +27,7 @@ class postfix::params {
           $sysconfig_mail = '/etc/sysconfig/mail'
         }
         default: {
-          fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${::osfamily}/${::operatingsystem}")
+          fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${facts['os'['family']}/${facts['os']['name']}")
         }
       }
       $alias_map = '/etc/aliases'
@@ -45,7 +45,7 @@ class postfix::params {
       $run_chrooted = false
     }
     'Debian': {
-      case $::operatingsystem {
+      case $facts['os']['name']{
         'Ubuntu': {
           $sysconfig_mail = undef
           $alias_map = '/etc/aliases'
@@ -57,35 +57,28 @@ class postfix::params {
           $mail_owner = 'postfix'
           $mail_group = 'postfix'
           $setgid_group = 'postdrop'
-          case $::operatingsystemmajrelease {
-            '14.04': {
-              $daemon_directory = '/usr/lib/postfix'
-            }
-            default: {
-              $daemon_directory = '/usr/lib/postfix/sbin'
-            }
-          }
+          $daemon_directory = '/usr/lib/postfix/sbin'
           $command_directory = '/usr/sbin'
           $run_chrooted = true
         }
         default: {
-          fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${::osfamily}/${::operatingsystem}")
+          fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${facts['os']['family']}/${facts['os']['name']}")
         }
       }
     }
     default: {
-      fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${::osfamily}")
+      fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${facts['os']['family']}")
     }
   }
 
   # $aliases is a hash {target => "recipients"}
   $aliases = undef
   $disable_vrfy_command = 'yes'
-  $myhostname = $::fqdn
+  $myhostname = $facts['networking']['fqdn']
   $relayhost = undef
   $mydomain = undef
   $mydestination = undef
-  $myorigin = $::fqdn
+  $myorigin = $facts['networking']['fqdn']
   $main_cf = '/etc/postfix/main.cf'
   $master_cf = '/etc/postfix/master.cf'
   $package_ensure = 'installed'
@@ -115,8 +108,8 @@ class postfix::params {
   $smtpd_data_restrictions = 'reject_unauth_pipelining, reject_multi_recipient_bounce, permit'
   $smtpd_tls_auth_only = 'no'
   $smtpd_tls_capath = '/etc/postfix/ssl/CA'
-  $smtpd_tls_cert_file = "/etc/postfix/ssl/${::fqdn}.pem"
-  $smtpd_tls_key_file = "/etc/postfix/ssl/${::fqdn}.key"
+  $smtpd_tls_cert_file = "/etc/postfix/ssl/${facts['networking']['fqdn']}.pem"
+  $smtpd_tls_key_file = "/etc/postfix/ssl/${facts['networking']['fqdn']}.key"
   $smtpd_use_tls = 'no'
   $smtp_use_tls = 'no'
   $smtpd_tls_received_header = 'no'
