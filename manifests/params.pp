@@ -27,7 +27,7 @@ class postfix::params {
           $sysconfig_mail = '/etc/sysconfig/mail'
         }
         default: {
-          fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${facts['os'['family']}/${facts['os']['name']}")
+          fail("Unsupported platform: buzzdeee-${module_name} currently doesn't support ${facts['os']['family']}/${facts['os']['name']}")
         }
       }
       $alias_map = '/etc/aliases'
